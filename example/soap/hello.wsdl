@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions name="Solsoft_HelloWorld" targetNamespace="urn:Solsoft_HelloWorld" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn:Solsoft_HelloWorld" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+<types xmlns="http://schemas.xmlsoap.org/wsdl/" />
+<portType name="Solsoft_HelloWorldPort"><operation name="greet">
+<input message="tns:greetRequest" />
+<output message="tns:greetResponse" />
+</operation>
+<operation name="serverTimestamp">
+<input message="tns:serverTimestampRequest" />
+<output message="tns:serverTimestampResponse" />
+</operation>
+</portType>
+<binding name="Solsoft_HelloWorldBinding" type="tns:Solsoft_HelloWorldPort">
+<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+<operation name="greet">
+<soap:operation soapAction="urn:Solsoft_HelloWorld#HelloWorld#greet" />
+<input><soap:body use="encoded" namespace="urn:Solsoft_HelloWorld" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+</input>
+<output>
+<soap:body use="encoded" namespace="urn:Solsoft_HelloWorld" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+</output>
+</operation>
+<operation name="serverTimestamp">
+<soap:operation soapAction="urn:Solsoft_HelloWorld#HelloWorld#serverTimestamp" />
+<input><soap:body use="encoded" namespace="urn:Solsoft_HelloWorld" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+</input>
+<output>
+<soap:body use="encoded" namespace="urn:Solsoft_HelloWorld" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+</output>
+</operation>
+</binding>
+<service name="Solsoft_HelloWorld">
+<documentation />
+<port name="Solsoft_HelloWorldPort" binding="tns:Solsoft_HelloWorldBinding"><soap:address location="http://127.0.0.1/createsoap/HelloWorldService.php" />
+</port>
+</service>
+<message name="greetRequest">
+<part name="name" type="xsd:string" />
+</message>
+<message name="greetResponse">
+<part name="greet" type="xsd:string" />
+</message>
+<message name="serverTimestampRequest">
+</message>
+<message name="serverTimestampResponse">
+<part name="serverTimestamp" type="xsd:string" />
+</message>
+</definitions>

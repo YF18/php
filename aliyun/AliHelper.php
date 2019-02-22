@@ -1,17 +1,17 @@
 <?php
 //
-require_once getcwd().'/aliyun-php-sdk-core/Config.php';
+require_once getcwd().'/core/Config.php';
 //
 use vod\Request\V20170321 as vod;
 use OSS\OssClient;
 //
-class AliHelp{
+class AliHelper{
     //
     private static $instance;
     // client
     private static $vodClient;
     private static $ossClient;
-    //
+    // config
     private static $regionId = 'cn-beijing';
     private static $accessKeyId="";
     private static $accessKeySecret="";
@@ -48,8 +48,8 @@ class AliHelp{
             $request = new vod\CreateUploadVideoRequest();
             $request->setTitle($title);       // 视频标题(必填参数)
             $request->setFileName($fileName); // 视频源文件名称，必须包含扩展名(必填参数)
-            $request->setTemplateGroupId("31feb86dff54181dfc02f364523380bd");// 视频转码ID
-            $request->setCateId("1000019374");// 视频分类ID
+//            $request->setTemplateGroupId("31feb86dff54181dfc02f364523380bd");// 视频转码ID
+//            $request->setCateId("1000019374");// 视频分类ID
             return self::$vodClient->getAcsResponse($request);
         } catch (Exception $e) {
             var_dump($e->getMessage());
@@ -86,7 +86,7 @@ function error($msg){
 }
 
 // AliHelp
-//require_once $_SERVER["DOCUMENT_ROOT"].'vendor/aliyun/AliHelp.php';
+//require_once $_SERVER["DOCUMENT_ROOT"].'vendor/aliyun/AliHelper.php';
 
 // 文件上传
 function file(){
@@ -95,8 +95,8 @@ function file(){
     if($sum==0){
         error("文件必传");
     }
-    // AliHelp
-    $aliHelp=AliHelp::init();
+    // AliHelper
+    $aliHelper=AliHelper::init();
     //
     $result=[];
     for ($x = 1; $x <=$sum; $x++) {
@@ -111,7 +111,7 @@ function file(){
         $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
         $tmp = $file['tmp_name'];
         $fileName=date('YmdHis') . rand(0, 9999) . '.' . $ext;
-        $fileUrl=$aliHelp::uploadFile($fileName, $tmp);
+        $fileUrl=$aliHelper::uploadFile($fileName, $tmp);
         array_push($result, $fileUrl);
         unlink($tmp);
     }
@@ -133,8 +133,8 @@ function video(){
     if(!$fileName){
         error("视频源文件名称必须");
     }
-    // AliHelp
-    $aliHelp=AliHelp::init();
-    $result=$aliHelp::uploadVideo($title, $fileName);
+    // AliHelper
+    $aliHelper=AliHelper::init();
+    $result=$aliHelper::uploadVideo($title, $fileName);
     var_dump($result);
 }
